@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12223b">
+  <meta name="description" content="Учёт ежемесячных счетов и поступлений">
+  <title>Оплата — учёт счетов</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2312223b'/%3E%3Cpath d='M16 20h32M16 32h22M16 44h32' stroke='%237ac7ff' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="app.js?v=2" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">≡</span><span>Оплата</span></div>
+      <span class="topbar-note">Учёт поступлений</span>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <nav class="bottom-nav" aria-label="Основная навигация">
+      <button type="button" data-view="overview" class="nav-button"><span aria-hidden="true">◫</span>Обзор</button>
+      <button type="button" data-view="clients" class="nav-button"><span aria-hidden="true">♧</span>Плательщики</button>
+      <button type="button" data-view="history" class="nav-button"><span aria-hidden="true">▤</span>История</button>
+      <button type="button" data-view="settings" class="nav-button"><span aria-hidden="true">⚙</span>Данные</button>
+    </nav>
+  </div>
+  <dialog id="modal"><div id="modal-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <input id="import-file" type="file" accept="application/json,.json" hidden>
+</body>
+</html>
