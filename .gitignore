@@ -1,3 +1,4 @@
 *.json
+!seed.enc.json
 *.csv
 .DS_Store

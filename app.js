@@ -220,5 +220,26 @@
       data.dueDay=day; save(); toast('Срок для новых начислений сохранён.');
     }
   });
+  async function loadSharedSeed() {
+    const encodedKey = location.hash.match(/^#data=([A-Za-z0-9_-]{43})$/)?.[1];
+    if (!encodedKey || data.clients.length) return;
+    const bytes = (value) => Uint8Array.from(atob(value.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+    try {
+      const response = await fetch('seed.enc.json');
+      if (!response.ok) throw Error('Seed unavailable');
+      const encrypted = await response.json();
+      const key = await crypto.subtle.importKey('raw', bytes(encodedKey), 'AES-GCM', false, ['decrypt']);
+      const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv:bytes(encrypted.iv)}, key, bytes(encrypted.data));
+      const imported = JSON.parse(new TextDecoder().decode(plain));
+      if (!valid(imported)) throw Error('Invalid seed');
+      data = imported;
+      period = [currentPeriod(), ...data.invoices.map(i => i.period)].sort().at(-1);
+      save();
+      toast('Реестр загружен.');
+    } catch {
+      toast('Не удалось открыть данные по ссылке.');
+    }
+  }
   render();
+  loadSharedSeed();
 })();
